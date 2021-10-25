@@ -13,6 +13,8 @@
 		30BBD1B82726A8E200432B52 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30BBD1B72726A8E200432B52 /* Preview Assets.xcassets */; };
 		30BBD1C32726A8E200432B52 /* SharplessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1C22726A8E200432B52 /* SharplessTests.swift */; };
 		30BBD1CE2726A8E200432B52 /* SharplessUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1CD2726A8E200432B52 /* SharplessUITests.swift */; };
+		30BBD1DF2726C2C300432B52 /* LiveTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1DE2726C2C300432B52 /* LiveTextView.swift */; };
+		30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1E02726C4FD00432B52 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,8 @@
 		30BBD1C92726A8E200432B52 /* SharplessUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharplessUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBD1CD2726A8E200432B52 /* SharplessUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharplessUITests.swift; sourceTree = "<group>"; };
 		30BBD1CF2726A8E200432B52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30BBD1DE2726C2C300432B52 /* LiveTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveTextView.swift; sourceTree = "<group>"; };
+		30BBD1E02726C4FD00432B52 /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,8 @@
 		30BBD1DB2726A98A00432B52 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				30BBD1DE2726C2C300432B52 /* LiveTextView.swift */,
+				30BBD1E02726C4FD00432B52 /* SettingView.swift */,
 				30BBD1B22726A8E000432B52 /* ContentView.swift */,
 			);
 			path = View;
@@ -284,6 +290,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				30BBD1B32726A8E000432B52 /* ContentView.swift in Sources */,
+				30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */,
+				30BBD1DF2726C2C300432B52 /* LiveTextView.swift in Sources */,
 				30BBD1B12726A8E000432B52 /* SharplessApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

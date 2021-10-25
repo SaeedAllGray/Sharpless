@@ -95,8 +95,10 @@
 		30BBD1AF2726A8E000432B52 /* Sharpless */ = {
 			isa = PBXGroup;
 			children = (
+				30BBD1DD2726A99C00432B52 /* Model */,
+				30BBD1DC2726A99200432B52 /* View Model */,
+				30BBD1DB2726A98A00432B52 /* View */,
 				30BBD1B02726A8E000432B52 /* SharplessApp.swift */,
-				30BBD1B22726A8E000432B52 /* ContentView.swift */,
 				30BBD1B42726A8E200432B52 /* Assets.xcassets */,
 				30BBD1B92726A8E200432B52 /* Info.plist */,
 				30BBD1B62726A8E200432B52 /* Preview Content */,
@@ -128,6 +130,28 @@
 				30BBD1CF2726A8E200432B52 /* Info.plist */,
 			);
 			path = SharplessUITests;
+			sourceTree = "<group>";
+		};
+		30BBD1DB2726A98A00432B52 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				30BBD1B22726A8E000432B52 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		30BBD1DC2726A99200432B52 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		30BBD1DD2726A99C00432B52 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -7,20 +7,65 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct SettingView: View {
+    @Environment(\.dismiss) var dismiss
+    @State private var fontSize: Double = 0
+    
     var body: some View {
-        
-        Form {
-            Text("Siren")
-            Text("Door Bell")
-            Text("Knock Knock")
-        }.listStyle(InsetGroupedListStyle())
-        
+        NavigationView {
+            VStack {
+                
+               
+                List {
+                    Section{
+                        Text("Font Size")
+                        Slider(value: $fontSize, in: 10...100)
+                            .padding()
+                     
+                    }
+                        
+                    Section
+                    {
+                        Text("Siren")
+                        Text("Door Bell")
+                        Text("Door Knock")
+                        Text("Your Name")
+                        
+                    }
+                  
+                }.listStyle(InsetGroupedListStyle())
+                
+                
+            }
+            .accentColor(.mint)
+            .navigationTitle("Setting")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    
+                }
+            }
+            .accentColor(.mint)
+        }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        if #available(iOS 15.0, *) {
+            SettingView()
+        } else {
+            // Fallback on earlier versions
+        }
     }
 }

@@ -9,7 +9,8 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct LiveTextView: View {
-    @State private var showingSheet = false
+    @State private var showingSettingView = false
+    @State private var showingTypeView = false
     @State var text: String = "Live listen is ready!"
     @State var orientation = UIDevice.current.orientation
     @State private var isShareViewPresented: Bool = false
@@ -30,6 +31,7 @@ struct LiveTextView: View {
                         .font(.system(size: 40))
                         .background(.mint)
                         .padding(10)
+                        
                     
                 }
                 
@@ -43,12 +45,12 @@ struct LiveTextView: View {
                     }
                     
                     Button {
-                        showingSheet.toggle()
+                        showingTypeView.toggle()
                     } label: {
                         Image(systemName: "keyboard")
                             .font(.system(size: 30))
                     }
-                    .sheet(isPresented: $showingSheet) {
+                    .sheet(isPresented: $showingTypeView) {
                         TypeView()
                     }
                     Button {
@@ -59,12 +61,12 @@ struct LiveTextView: View {
                         //                            .padding()
                     }
                     Button {
-                        showingSheet.toggle()
+                        showingSettingView.toggle()
                     } label: {
                         Image(systemName: "gearshape")
                             .font(.system(size: 30))
                     }
-                    .sheet(isPresented: $showingSheet) {
+                    .sheet(isPresented: $showingSettingView) {
                         SettingView()
                     }
                     Button(action: actionSheet) {

@@ -9,28 +9,29 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct SettingView: View {
-    
+    @State var value: Double = 10
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var settingViewModel: SettingViewModel
     @State private var fontSize: Double = 0
-
+    
+    
+    
     
     var body: some View {
         NavigationView {
             VStack {
                 
-               
+                
                 List {
                     Section{
                         Text("Font Size")
                         
-                        Slider(value: $fontSize, in: 10...100) { _ in
-                            UserDefaults.standard.setValue(fontSize, forKey: "font")
-                            fontSize = UserDefaults.standard.value(forKey: "font") as? Double ?? 0
-                        }
-                    
-                        .padding()
-                    }
+                        Slider(value: $settingViewModel.fontSize, in: 10...100)
+                            .padding()
                         
+                        
+                    }
+                    
                     Section
                     {
                         Text("Siren")
@@ -39,12 +40,12 @@ struct SettingView: View {
                         Text("Your Name")
                         
                     }
-                  
+                    
                 }.listStyle(InsetGroupedListStyle())
                 
                 
             }
-            .accentColor(.mint)
+            .accentColor(.teal)
             .navigationTitle("Setting")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -56,12 +57,14 @@ struct SettingView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") {
+                        settingViewModel.setFontSize()
                         dismiss()
                     }
                     
                 }
             }
-            .accentColor(.mint)
+            .environmentObject(settingViewModel)
+            .accentColor(.teal)
         }
     }
 }

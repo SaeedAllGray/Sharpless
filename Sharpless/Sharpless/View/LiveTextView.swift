@@ -9,8 +9,13 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct LiveTextView: View {
-    @State private var showingSheet = false
+    init() {
+        UITextView.appearance().backgroundColor = .clear
+    }
+    @State private var showingSettingView = false
+    @State private var showingTypeView = false
     @State var text: String = "Live listen is ready!"
+    @State private var backgroundColor: Color = .white
     @State var orientation = UIDevice.current.orientation
     @State private var isShareViewPresented: Bool = false
     let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
@@ -19,19 +24,16 @@ struct LiveTextView: View {
     var body: some View {
         
         ZStack {
-            if orientation.isLandscape {
-                Color.mint
-                    .ignoresSafeArea()
-            }
             VStack {
                 ScrollView {
                     TextEditor(text:$text)
+                        .allowsHitTesting(false)
                         .frame(height: 400)
                         .font(.system(size: 40))
-                        .background(.mint)
+                        .background(backgroundColor)
                         .padding(10)
-                    
                 }
+                .background(backgroundColor)
                 
                 HStack {
                     
@@ -43,12 +45,12 @@ struct LiveTextView: View {
                     }
                     
                     Button {
-                        showingSheet.toggle()
+                        showingTypeView.toggle()
                     } label: {
                         Image(systemName: "keyboard")
                             .font(.system(size: 30))
                     }
-                    .sheet(isPresented: $showingSheet) {
+                    .sheet(isPresented: $showingTypeView) {
                         TypeView()
                     }
                     Button {
@@ -59,12 +61,12 @@ struct LiveTextView: View {
                         //                            .padding()
                     }
                     Button {
-                        showingSheet.toggle()
+                        showingSettingView.toggle()
                     } label: {
                         Image(systemName: "gearshape")
                             .font(.system(size: 30))
                     }
-                    .sheet(isPresented: $showingSheet) {
+                    .sheet(isPresented: $showingSettingView) {
                         SettingView()
                     }
                     Button(action: actionSheet) {
@@ -75,16 +77,20 @@ struct LiveTextView: View {
                     }
                     
                 }
-                
+                .background(backgroundColor)
                 .padding(20)
-                
-                
-                
             }
+            .background(backgroundColor)
         }
+        .background(backgroundColor)
+        
         .onReceive(orientationChanged) { _ in
             self.orientation = UIDevice.current.orientation
-            
+            if (orientation.isLandscape) {
+                backgroundColor = .mint
+            } else {
+                backgroundColor = .white
+            }
         }
     }
     func actionSheet() {

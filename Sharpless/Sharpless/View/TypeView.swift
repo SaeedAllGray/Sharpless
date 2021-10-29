@@ -7,23 +7,27 @@
 
 import SwiftUI
 import AVFoundation
+
 @available(iOS 15.0, *)
 struct TypeView: View {
-    
-    init() {
-        UITextView.appearance().backgroundColor = .clear
-    }
-    let synth = AVSpeechSynthesizer()
     @State var theUtterance = AVSpeechUtterance(string: "")
     @State var orientation = UIDevice.current.orientation
     @State private var buttonImage = "play.circle"
     @State private var text: String = ""
-    @State private var backgroundColor: Color = .white
+    @State private var backgroundColor: Color = .clear
     @FocusState private var keyboardIsFocused: Bool
     @Environment(\.dismiss) var dismiss
+    
+    let synth = AVSpeechSynthesizer()
     let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
         .makeConnectable()
         .autoconnect()
+    
+    init() {
+        UITextView.appearance().backgroundColor = .clear
+    }
+    
+   
 
     var body: some View {
 
@@ -53,14 +57,14 @@ struct TypeView: View {
             .background(backgroundColor)
         }
         .background(backgroundColor)
-        .accentColor(.mint)
+        .accentColor(.teal)
         .onReceive(orientationChanged) { _ in
             self.orientation = UIDevice.current.orientation
             keyboardIsFocused = false
             if (orientation.isLandscape) {
-                backgroundColor = .mint
+                backgroundColor = .teal
             } else {
-                backgroundColor = .white
+                backgroundColor = .clear
             }
             
         }

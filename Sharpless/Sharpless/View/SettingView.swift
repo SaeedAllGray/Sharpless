@@ -9,8 +9,10 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct SettingView: View {
+    
     @Environment(\.dismiss) var dismiss
     @State private var fontSize: Double = 0
+
     
     var body: some View {
         NavigationView {
@@ -20,9 +22,13 @@ struct SettingView: View {
                 List {
                     Section{
                         Text("Font Size")
-                        Slider(value: $fontSize, in: 10...100)
-                            .padding()
-                     
+                        
+                        Slider(value: $fontSize, in: 10...100) { _ in
+                            UserDefaults.standard.setValue(fontSize, forKey: "font")
+                            fontSize = UserDefaults.standard.value(forKey: "font") as? Double ?? 0
+                        }
+                    
+                        .padding()
                     }
                         
                     Section

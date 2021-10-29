@@ -9,9 +9,13 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct LiveTextView: View {
+    init() {
+        UITextView.appearance().backgroundColor = .clear
+    }
     @State private var showingSettingView = false
     @State private var showingTypeView = false
     @State var text: String = "Live listen is ready!"
+    @State private var backgroundColor: Color = .white
     @State var orientation = UIDevice.current.orientation
     @State private var isShareViewPresented: Bool = false
     let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
@@ -20,20 +24,16 @@ struct LiveTextView: View {
     var body: some View {
         
         ZStack {
-            if orientation.isLandscape {
-                Color.mint
-                    .ignoresSafeArea()
-            }
             VStack {
                 ScrollView {
                     TextEditor(text:$text)
+                        .allowsHitTesting(false)
                         .frame(height: 400)
                         .font(.system(size: 40))
-                        .background(.mint)
+                        .background(backgroundColor)
                         .padding(10)
-                        
-                    
                 }
+                .background(backgroundColor)
                 
                 HStack {
                     
@@ -77,16 +77,20 @@ struct LiveTextView: View {
                     }
                     
                 }
-                
+                .background(backgroundColor)
                 .padding(20)
-                
-                
-                
             }
+            .background(backgroundColor)
         }
+        .background(backgroundColor)
+        
         .onReceive(orientationChanged) { _ in
             self.orientation = UIDevice.current.orientation
-            
+            if (orientation.isLandscape) {
+                backgroundColor = .mint
+            } else {
+                backgroundColor = .white
+            }
         }
     }
     func actionSheet() {

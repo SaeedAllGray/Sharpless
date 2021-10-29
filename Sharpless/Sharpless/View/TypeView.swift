@@ -10,34 +10,37 @@ import AVFoundation
 @available(iOS 15.0, *)
 struct TypeView: View {
     
+    init() {
+        UITextView.appearance().backgroundColor = .clear
+    }
     let synth = AVSpeechSynthesizer()
     @State var theUtterance = AVSpeechUtterance(string: "")
-    
+    @State var orientation = UIDevice.current.orientation
     @State private var buttonImage = "play.circle"
     @State private var text: String = ""
+    @State private var backgroundColor: Color = .white
+    @FocusState private var keyboardIsFocused: Bool
     @Environment(\.dismiss) var dismiss
-   
+    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+        .makeConnectable()
+        .autoconnect()
+
     var body: some View {
-        
+
         VStack  {
             
             ScrollView {
                 TextEditor(text:$text)
                     .frame(height: 400)
                     .font(.system(size: 40))
-                    .background(.mint)
-                    .padding(10)
-                
+                    .background(backgroundColor)
+                    .padding()
+                    .focused($keyboardIsFocused)
             }
+            .background(backgroundColor)
             
             Spacer()
             HStack (spacing: 50) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "arrow.up.left.and.arrow.down.right.circle")
-                        .font(.system(size: 40))
-                }
                 
                 Button(action: speak) {
                     
@@ -47,9 +50,20 @@ struct TypeView: View {
                 }
             }
             .padding()
+            .background(backgroundColor)
         }
+        .background(backgroundColor)
         .accentColor(.mint)
-        
+        .onReceive(orientationChanged) { _ in
+            self.orientation = UIDevice.current.orientation
+            keyboardIsFocused = false
+            if (orientation.isLandscape) {
+                backgroundColor = .mint
+            } else {
+                backgroundColor = .white
+            }
+            
+        }
         
     }
     func speak() {

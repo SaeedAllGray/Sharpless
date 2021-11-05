@@ -51,7 +51,6 @@ struct LiveTextView: View {
                     ScrollView {
                         TextEditor(text:$text)
                             .allowsHitTesting(false)
-                            .frame(height: geometry.size.height * 5 / 6)
                             .font(.system(size: settingViewModel.fontSize))
                             .background(backgroundColor)
                             .padding(10)
@@ -99,10 +98,13 @@ struct LiveTextView: View {
                                     .font(.system(size: 60))
                                 
                             } else {
-                                Text("Stop")
+                                Image(systemName: "mic.circle.fill")
+                                    .font(.system(size: 60))
+                                    .foregroundColor(.pink)
+                                    
                             }
                         }
-                        //                        Spacer()
+                        
                         Button {
                             showingSettingView.toggle()
                         } label: {
@@ -134,11 +136,11 @@ struct LiveTextView: View {
             .onReceive(orientationChanged) { _ in
                 self.orientation = UIDevice.current.orientation
                 if (orientation.isLandscape) {
-                    backgroundColor = .teal
-                    foregroundColor = UIColor.black
+                    backgroundColor = CustomColor.verte
+                    foregroundColor = UIColor.white
                 } else {
                     backgroundColor = .clear
-                    foregroundColor = UIColor.systemTeal
+                    foregroundColor = .systemTeal
                     
                 }
             }

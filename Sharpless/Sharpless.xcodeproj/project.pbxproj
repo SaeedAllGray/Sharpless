@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		300438712727F1FA0051FAE7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300438702727F1FA0051FAE7 /* SettingViewModel.swift */; };
 		3004387327280E150051FAE7 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3004387227280E150051FAE7 /* ToolsView.swift */; };
+		3007DE552735AB6900414570 /* CustomColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3007DE542735AB6900414570 /* CustomColor.swift */; };
+		3007DE572735AEE200414570 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3007DE562735AEE200414570 /* Color+Extension.swift */; };
 		300A226827329B4C005AE53D /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300A226727329B4C005AE53D /* Sound.swift */; };
 		30741D202729C18E00279088 /* TypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30741D1F2729C18E00279088 /* TypeView.swift */; };
 		30BBD1B12726A8E000432B52 /* SharplessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1B02726A8E000432B52 /* SharplessApp.swift */; };
@@ -41,6 +43,8 @@
 /* Begin PBXFileReference section */
 		300438702727F1FA0051FAE7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3004387227280E150051FAE7 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
+		3007DE542735AB6900414570 /* CustomColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColor.swift; sourceTree = "<group>"; };
+		3007DE562735AEE200414570 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		300A226727329B4C005AE53D /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		30741D1F2729C18E00279088 /* TypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeView.swift; sourceTree = "<group>"; };
 		30BBD1AD2726A8E000432B52 /* Sharpless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpless.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				300A226727329B4C005AE53D /* Sound.swift */,
+				3007DE542735AB6900414570 /* CustomColor.swift */,
+				3007DE562735AEE200414570 /* Color+Extension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -302,7 +308,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3004387327280E150051FAE7 /* ToolsView.swift in Sources */,
+				3007DE572735AEE200414570 /* Color+Extension.swift in Sources */,
 				30741D202729C18E00279088 /* TypeView.swift in Sources */,
+				3007DE552735AB6900414570 /* CustomColor.swift in Sources */,
 				300438712727F1FA0051FAE7 /* SettingViewModel.swift in Sources */,
 				30BBD1B32726A8E000432B52 /* ContentView.swift in Sources */,
 				30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */,
@@ -467,7 +475,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Sharpless/Preview Content\"";
-				DEVELOPMENT_TEAM = STYRP9W7ZQ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Sharpless/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;

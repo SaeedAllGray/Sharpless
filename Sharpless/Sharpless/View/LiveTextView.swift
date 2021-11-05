@@ -136,7 +136,7 @@ struct LiveTextView: View {
             .onReceive(orientationChanged) { _ in
                 self.orientation = UIDevice.current.orientation
                 if (orientation.isLandscape) {
-                    backgroundColor = CustomColor.verte
+                    backgroundColor = .verte
                     foregroundColor = UIColor.white
                 } else {
                     backgroundColor = .clear

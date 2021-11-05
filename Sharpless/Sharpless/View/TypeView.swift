@@ -62,7 +62,7 @@ struct TypeView: View {
             self.orientation = UIDevice.current.orientation
             keyboardIsFocused = false
             if (orientation.isLandscape) {
-                backgroundColor = CustomColor.verte
+                backgroundColor = .verte
             } else {
                 backgroundColor = .clear
             }

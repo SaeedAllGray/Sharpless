@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		300438712727F1FA0051FAE7 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300438702727F1FA0051FAE7 /* SettingViewModel.swift */; };
 		3004387327280E150051FAE7 /* ToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3004387227280E150051FAE7 /* ToolsView.swift */; };
+		300A226827329B4C005AE53D /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300A226727329B4C005AE53D /* Sound.swift */; };
 		30741D202729C18E00279088 /* TypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30741D1F2729C18E00279088 /* TypeView.swift */; };
 		30BBD1B12726A8E000432B52 /* SharplessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1B02726A8E000432B52 /* SharplessApp.swift */; };
 		30BBD1B32726A8E000432B52 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1B22726A8E000432B52 /* ContentView.swift */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		300438702727F1FA0051FAE7 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		3004387227280E150051FAE7 /* ToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsView.swift; sourceTree = "<group>"; };
+		300A226727329B4C005AE53D /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		30741D1F2729C18E00279088 /* TypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeView.swift; sourceTree = "<group>"; };
 		30BBD1AD2726A8E000432B52 /* Sharpless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sharpless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30BBD1B02726A8E000432B52 /* SharplessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharplessApp.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		30BBD1DD2726A99C00432B52 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				300A226727329B4C005AE53D /* Sound.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */,
 				30BBD1DF2726C2C300432B52 /* LiveTextView.swift in Sources */,
 				30BBD1B12726A8E000432B52 /* SharplessApp.swift in Sources */,
+				300A226827329B4C005AE53D /* Sound.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@ struct SettingView: View {
     @EnvironmentObject var settingViewModel: SettingViewModel
     @State private var fontSize: Double = 0
     
+    let events = ["Siren", "Boor Bell", "Door Knock", "MY NAME"]
     
     
     
@@ -31,15 +32,12 @@ struct SettingView: View {
                         
                         
                     }
-                    
-                    Section
-                    {
-                        Text("Siren")
-                        Text("Door Bell")
-                        Text("Door Knock")
-                        Text("Your Name")
-                        
+                    ForEach(events,id: \.self) { event in
+                        NavigationLink(destination: SetVibrationView()) {
+                            Text(event)
+                        }
                     }
+                   
                     
                 }.listStyle(InsetGroupedListStyle())
                 
@@ -63,18 +61,14 @@ struct SettingView: View {
                     
                 }
             }
-            .environmentObject(settingViewModel)
             .accentColor(.teal)
+            .environmentObject(settingViewModel)
         }
     }
 }
-
+@available(iOS 15.0, *)
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        if #available(iOS 15.0, *) {
-            SettingView()
-        } else {
-            // Fallback on earlier versions
-        }
+        SettingView()
     }
 }

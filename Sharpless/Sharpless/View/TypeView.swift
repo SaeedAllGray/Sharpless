@@ -61,7 +61,7 @@ struct TypeView: View {
         .onReceive(orientationChanged) { _ in
             self.orientation = UIDevice.current.orientation
             keyboardIsFocused = false
-            if (orientation.isLandscape) {
+            if (!orientation.isPortrait) {
                 backgroundColor = .verte
             } else {
                 backgroundColor = .clear

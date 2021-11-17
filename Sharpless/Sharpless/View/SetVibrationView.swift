@@ -24,6 +24,7 @@ struct SetVibrationView: View {
                 
                 PatternView(pattern: $pattern)
                     .padding()
+                Spacer()
                 HStack {
                     Button {
                         self.pattern = []
@@ -40,6 +41,7 @@ struct SetVibrationView: View {
                     }
                     .disabled(pattern.count < 5)
                 }
+                
                 Spacer()
                 
                 

@@ -98,9 +98,9 @@ struct LiveTextView: View {
                                     .font(.system(size: 60))
                                 
                             } else {
-                                Image(systemName: "mic.circle.fill")
+                                Image(systemName: "record.circle.fill")
                                     .font(.system(size: 60))
-                                    .foregroundColor(.pink)
+                                    .foregroundColor(.red)
                                     
                             }
                         }
@@ -255,6 +255,6 @@ struct LiveTextView_Previews: PreviewProvider {
     
     static var previews: some View {
         LiveTextView()
-            .previewInterfaceOrientation(.portraitUpsideDown)
+            .previewInterfaceOrientation(.portrait)
     }
 }

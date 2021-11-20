@@ -42,9 +42,8 @@ void connectingToWiFi()
 }
 
 void performPattern(char* pattern) 
-{
-  int length = sizeof(pattern)/sizeof(pattern[0]);   
-  for (int i = 0; i < pattern; i++) 
+{   
+  for (int i = 0; i < 5; i++) 
   {
      delay(100);
      if (pattern[i] == 's') {
@@ -66,6 +65,7 @@ void setup() {
   WiFi.begin(WIFI_SSID, PASSWORD);
   connectingToWiFi();
   setPinModes();
+  performPattern("sssls"); 
 }
 
 void loop() { }

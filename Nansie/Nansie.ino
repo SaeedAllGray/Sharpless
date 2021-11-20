@@ -34,15 +34,32 @@ void connectingToWiFi()
   while (!isConnectedToWiFi())
   {
     delay(1000);
-    Serial.print("!");
+    Serial.println("!");
     counter++;
   }
   message = "Connected after " + String(counter) + " seconds.";
   Serial.print(message);
 }
 
-
-
+void performPattern(char* pattern) 
+{
+  int length = sizeof(pattern)/sizeof(pattern[0]);   
+  for (int i = 0; i < pattern; i++) 
+  {
+     delay(100);
+     if (pattern[i] == 's') {
+        digitalWrite(LED_PIN, LOW);
+        delay(100);
+        digitalWrite(LED_PIN, HIGH);
+     }
+     else if (pattern[i] == 'l') 
+     {
+        digitalWrite(LED_PIN, LOW);
+        delay(1000);
+        digitalWrite(LED_PIN, HIGH);
+     }
+  }
+}
 
 void setup() {
   Serial.begin(9600);

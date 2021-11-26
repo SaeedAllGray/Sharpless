@@ -2,32 +2,90 @@
 // 2021 - All rights resereved.
 
 #include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <FS.h>
 
 const byte LED_PIN = LED_BUILTIN;
 
 const String WIFI_SSID = "The Cyan One"; 
 const String PASSWORD = "October2020";
 
+ESP8266WebServer server(80);
+
 ADC_MODE(ADC_VCC);
 
-void setPinModes() 
-{
+void setPinModes() {
   pinMode(LED_PIN, OUTPUT);
 }
+void createFile() {
+  SPIFFSConfig cfg;
+  cfg.setAutoFormat(false);
+  SPIFFS.setConfig(cfg);
+  SPIFFS.begin();
+  if ( SPIFFS.exists("/data.txt") )
+    Serial.println("\nexist");
+}
 
-bool batteryNeedsReplacing() 
-{
+void addToFile(String text) {
+  File file = SPIFFS.open("/data.txt", "a+");
+  file.println(text);
+  file.close();
+//  SPIFFS.end();
+}
+
+int getIndexOfEvent(String eventName) {
+  File file = SPIFFS.open("/data.txt", "r+");
+  String data = file.readString();
+  file.close();
+  return data.indexOf(eventName);
+}
+
+void saveToFile(String data) {
+  File file = SPIFFS.open("/data.txt", "w+");
+  file.println(data);
+  file.close();
+}
+
+String readFromFile() {
+  File file = SPIFFS.open("/data.txt", "r");
+  String data = file.readString();
+  file.close();
+  return data;
+}
+
+String getPattern(String eventName) {
+  String data = readFromFile();
+  int patternStartIndex = data.indexOf(eventName) + eventName.length() + 1;
+  Serial.println(data.substring(patternStartIndex, patternStartIndex+5));
+  return data.substring(patternStartIndex, patternStartIndex+5);
+}
+
+void updateDatabase(String eventName,String pattern) {
+  String data = readFromFile();
+  int patternStartIndex = data.indexOf(eventName);
+  patternStartIndex += patternStartIndex != -1? eventName.length() + 1 : 0;
+  if(patternStartIndex == -1) {
+    data += eventName + ":" + pattern + "\n";
+  } 
+  else {
+    for(int i = patternStartIndex; i < patternStartIndex+5; i++) {
+      data[i] = pattern[i - patternStartIndex];
+    }
+  }
+  saveToFile(data);
+}
+
+
+bool batteryNeedsReplacing() {
   float voltage = ESP.getVcc();
   return voltage < 3.7;
 }
 
-bool isConnectedToWiFi() 
-{
+bool isConnectedToWiFi() {
   return WiFi.status() == WL_CONNECTED;
 }
 
-void connectingToWiFi()
-{
+void connectingToWiFi() {
   String message = "Connecting to " + WIFI_SSID + "! Please Wait.";
   Serial.println(message);
   int counter = 0;
@@ -41,8 +99,7 @@ void connectingToWiFi()
   Serial.print(message);
 }
 
-void performPattern(char* pattern) 
-{   
+void performPattern(String pattern) {   
   for (int i = 0; i < 5; i++) 
   {
      delay(100);
@@ -59,13 +116,49 @@ void performPattern(char* pattern)
      }
   }
 }
+void handleNotFound() {
+  server.send(404, "text/plain", "Bad Request!");
+}
+void manageAPI() {
+  server.on("/", []() {
+    server.send(200, "text/plain", "Server is up.");
+  });
 
+  server.on("/setpattern", []() {//192.168.0.0?setpattern?event=door&pattern=sllls
+    server.send(200, "text/plain", "Succeed.");
+    updateDatabase(server.arg(0),server.arg(1)); 
+  });
+  
+  server.on("/performpattern", []() {//192.168.0.0?performpattern?event=door
+    String pattern = getPattern(server.arg(0));
+    performPattern(pattern);
+    server.send(200, "text/plain", "Performing " + pattern);
+  });
+
+   server.on("/data", []() {
+    String data = readFromFile();
+    server.send(200, "text/plain", data);
+  });
+
+  server.on("/removehistory", []() {
+    SPIFFS.remove("/data.txt");
+    server.send(200, "text/plain", "Succeed");
+  });
+
+
+  server.onNotFound(handleNotFound);
+}
 void setup() {
   Serial.begin(9600);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, PASSWORD);
   connectingToWiFi();
-  setPinModes();
-  performPattern("sssls"); 
+  createFile();
+  setPinModes(); 
+  manageAPI();
+  server.begin();
 }
 
-void loop() { }
+void loop() { 
+  server.handleClient();
+}

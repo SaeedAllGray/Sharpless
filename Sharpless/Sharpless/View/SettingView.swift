@@ -14,7 +14,7 @@ struct SettingView: View {
     @EnvironmentObject var settingViewModel: SettingViewModel
     @State private var fontSize: Double = 0
     
-    let events = ["Siren", "Boor Bell", "Door Knock", "MY NAME"]
+    let events = ["Siren", "Door Bell", "Door Knock", "MY NAME"]
     
     
     

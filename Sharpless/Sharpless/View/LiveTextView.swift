@@ -194,15 +194,30 @@ struct LiveTextView: View {
             handleError(withMessage: "Could not make request")
             return
         }
+        
+        recognitionRequest.shouldReportPartialResults = true
+        
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest) {
             (result, error) in
-            var isFinal = false
             
-            if let result = result {
-                text = result.bestTranscription.formattedString
-                isFinal = result.isFinal
+            guard let res = result?.bestTranscription.formattedString else {
+                return
             }
-            if error != nil || isFinal {
+            let heyName = "hey \(settingViewModel.name)"
+            let HeyName = "Hey \(settingViewModel.name)"
+            if res.contains(heyName) || res.contains(HeyName)  {
+                // TODO: notify vibrator
+                if let range = res.range(of: heyName){
+                    let heyText = heyName + res[range.upperBound...]
+                    text = String(heyText)
+                } else if let range = res.range(of: HeyName) {
+                    let heyText = HeyName + res[range.upperBound...]
+                    text = String(heyText)
+                }
+            }
+            
+
+            if error != nil  {
                 // Stop recognizing speech if there is a problem.
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)

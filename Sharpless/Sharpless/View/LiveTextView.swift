@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import SoundAnalysis
 import Speech
 
 @available(iOS 15.0, *)
@@ -23,10 +24,18 @@ struct LiveTextView: View {
     @State private var speechRecognizer: SFSpeechRecognizer!
     @State private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     @State private var recognitionTask: SFSpeechRecognitionTask?
-    @State private var audioEngine: AVAudioEngine!
+    @State private var speechAudioEngine: AVAudioEngine!
     @State private var inputNode: AVAudioInputNode!
     @State private var audioSession: AVAudioSession!
    
+    // soundAnalysis-related properties
+    private let soundAudioEngine: AVAudioEngine = AVAudioEngine()
+    private let inputBus: AVAudioNodeBus = AVAudioNodeBus(0)
+    @State private var inputFormat: AVAudioFormat!
+    @State private var streamAnalyzer: SNAudioStreamAnalyzer!
+    private let resultsObserver = SoundResultsObserver()
+    private let analysisQueue = DispatchQueue(label: "com.example.AnalysisQueue")
+
     
     @State var orientation = UIDevice.current.orientation
     @State private var isShareViewPresented: Bool = false
@@ -78,6 +87,7 @@ struct LiveTextView: View {
                         //                        Spacer()
                         Button {
                             if !isRecording {
+                                startSoundAnalysis()
                                 do {
                                     try startRecording()
                                     isRecording.toggle()
@@ -219,7 +229,7 @@ struct LiveTextView: View {
 
             if error != nil  {
                 // Stop recognizing speech if there is a problem.
-                self.audioEngine.stop()
+                self.speechAudioEngine.stop()
                 inputNode.removeTap(onBus: 0)
 
                 self.recognitionRequest = nil
@@ -232,20 +242,20 @@ struct LiveTextView: View {
         }
         
         // Set up audio engine
-        audioEngine = AVAudioEngine()
-        inputNode = audioEngine.inputNode
+        speechAudioEngine = AVAudioEngine()
+        inputNode = speechAudioEngine.inputNode
         let recordingFromat = inputNode.outputFormat(forBus: 0)
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFromat) { buffer, _ in
             recognitionRequest.append(buffer)
         }
-        audioEngine.prepare()
+        speechAudioEngine.prepare()
         
         // Activate the session
         audioSession = AVAudioSession.sharedInstance()
         try audioSession.setCategory(.record, mode: .spokenAudio, options: .duckOthers)
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         
-        try audioEngine.start()
+        try speechAudioEngine.start()
         
         text = "I'm Listening"
     }
@@ -256,14 +266,45 @@ struct LiveTextView: View {
         recognitionRequest = nil
         
         // Stop recording.
-        audioEngine.stop()
+        speechAudioEngine.stop()
         inputNode.removeTap(onBus: 0)
         
         // Stop the session
         try audioSession.setActive(false, options: .notifyOthersOnDeactivation)
         audioSession = nil
     }
-       
+    // MARK: -Sound Analasys
+    func startSoundAnalysis() {
+      
+        
+        inputFormat = soundAudioEngine.inputNode.inputFormat(forBus: inputBus)
+
+        do {
+            try soundAudioEngine.start()
+
+            soundAudioEngine.inputNode.installTap(onBus: inputBus,
+                                             bufferSize: 8192,
+                                             format: inputFormat, block: analyzeSound(buffer:at:))
+
+            streamAnalyzer = SNAudioStreamAnalyzer(format: inputFormat)
+
+            let request = try SNClassifySoundRequest(classifierIdentifier: SNClassifierIdentifier.version1)
+
+            try streamAnalyzer.add(request,
+                                   withObserver: resultsObserver)
+
+
+        } catch {
+            print("Unable to start AVAudioEngine: \(error.localizedDescription)")
+        }
+    }
+    func analyzeSound(buffer: AVAudioBuffer, at time: AVAudioTime) {
+        analysisQueue.async {
+            self.streamAnalyzer.analyze(buffer,
+                                        atAudioFramePosition: time.sampleTime)
+        }
+    }
+
 }
 @available(iOS 15.0, *)
 struct LiveTextView_Previews: PreviewProvider {

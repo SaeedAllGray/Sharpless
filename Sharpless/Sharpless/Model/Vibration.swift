@@ -8,7 +8,7 @@
 import Foundation
 
 enum Vibration: String {
-    case short = "S"
-    case long = "L"
+    case short = "s"
+    case long = "l"
     case unknown = ""
 }

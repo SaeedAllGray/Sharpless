@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct PatternView: View {
-    @Binding var pattern: [Vibration]
+struct SetPatternView: View {
+    @Binding var pattern: Pattern
     var unassignedImage = Image(systemName: "capsule.portrait")
     var assignedImage = Image(systemName: "capsule.portrait.fill")
     var shortVibrationColor = Color.blue
@@ -18,14 +18,14 @@ struct PatternView: View {
             ForEach (0..<5, id: \.self) { number in
                 
                 self.image(for: number)
-                    .foregroundColor(number < pattern.count ? self.color(for: pattern[number]):Color.primary)
+                    .foregroundColor(number < pattern.vibrationList.count ? self.color(for: pattern.vibrationList[number]):Color.primary)
             }
         }
         
     }
     
     func image(for number: Int) -> Image {
-        if number < pattern.count {
+        if number < pattern.vibrationList.count {
             return assignedImage
         }
          else {
@@ -43,8 +43,8 @@ struct PatternView: View {
     
 }
 
-struct PatternView_Previews: PreviewProvider {
+struct SetPatternView_Previews: PreviewProvider {
     static var previews: some View {
-        PatternView(pattern: .constant([.short,.long,.short,.long,.short]))
+        SetPatternView(pattern: .constant(Pattern(string: "sslss")))
     }
 }

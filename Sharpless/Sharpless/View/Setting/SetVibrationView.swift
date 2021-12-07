@@ -11,7 +11,8 @@ import AudioToolbox
 @available(iOS 15.0, *)
 
 struct SetVibrationView: View {
-    @State var pattern = [Vibration]()
+    @ObservedObject var setPatterViewModel = SetPatternViewModel()
+    var event: String
     let impactMed = UIImpactFeedbackGenerator(style: .heavy)
     var body: some View {
         GeometryReader { geometry in
@@ -20,26 +21,29 @@ struct SetVibrationView: View {
                 Text("Design the pattern you desire to trigger when iPhone identified the event.")
                     .font(.headline)
                     .multilineTextAlignment(.center)
-                    .padding()
+                    .lineLimit(nil)
+                    .padding(10)
+
+
                 
-                PatternView(pattern: $pattern)
+                SetPatternView(pattern: $setPatterViewModel.pattern)
                     .padding()
                 Spacer()
                 HStack {
                     Button {
-                        self.pattern = []
+                        setPatterViewModel.clearPattern()
                     } label: {
                         Image(systemName: "trash.circle")
                             .font(.system(size: 30))
                     }
                    
                     Button {
-                        testVibration()
+                        setPatterViewModel.testPattern()
                     } label: {
                         Image(systemName: "play.circle")
                             .font(.system(size: 30))
                     }
-                    .disabled(pattern.count < 5)
+                    .disabled(!setPatterViewModel.shouldActiveSaveButton())
                 }
                 
                 Spacer()
@@ -57,7 +61,7 @@ struct SetVibrationView: View {
                     //                 .cornerRadius(10)
                     //                .clipped()
                     .onTapGesture {
-                        pattern.append( Vibration.short)
+                        setPatterViewModel.pattern.vibrationList.append( Vibration.short)
                        
                         impactMed.impactOccurred()
                     }
@@ -74,31 +78,31 @@ struct SetVibrationView: View {
                     //                 .cornerRadius(10)
                     //                .clipped()
                     .onTapGesture {
-                        pattern.append(Vibration.long)
+                        setPatterViewModel.pattern.vibrationList.append(Vibration.long)
                         print("ljdkfjerkfjrkjfhekjr")
                         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                     }
                     
                 }
-                .disabled(pattern.count == 5)
+                .disabled(setPatterViewModel.shouldActiveSaveButton())
             }
             
         }
-        .navigationTitle("Vibration")
+
+        .navigationTitle(self.event)
         .toolbar {
             Button("Save") {
-              
+                setPatterViewModel.savePattern(event: self.event, pattern: setPatterViewModel.pattern)
+                
             }
+            .disabled(!setPatterViewModel.shouldActiveSaveButton())
         }
         
-    }
-    func testVibration() {
-      
     }
 }
 @available(iOS 15.0, *)
 struct MakeVibrationView_Previews: PreviewProvider {
     static var previews: some View {
-        SetVibrationView(pattern: [.short,.long,.long,.long,.short])
+        SetVibrationView(event: "say my name")
     }
 }

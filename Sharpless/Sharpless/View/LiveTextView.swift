@@ -135,7 +135,7 @@ struct LiveTextView: View {
                         }
                         
                     }
-                    .foregroundColor(Color(foregroundColor))
+//                    .foregroundColor(Color(foregroundColor))
                     .background(backgroundColor)
                     .padding(10)
                 }

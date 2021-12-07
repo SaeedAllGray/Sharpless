@@ -3,12 +3,16 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <EEPROM.h>
 #include <FS.h>
 
 const byte LED_PIN = LED_BUILTIN;
 
 const String WIFI_SSID = "The Cyan One"; 
 const String PASSWORD = "October2020";
+const byte OFF = 0, ON = 1;
+const byte LED_POINTER = 0, VIBRATION_POINTER  = 1;
+
 
 ESP8266WebServer server(80);
 
@@ -28,7 +32,7 @@ void createFile() {
 
 void addToFile(String text) {
   File file = SPIFFS.open("/data.txt", "a+");
-  file.println(text);
+  file.print(text);
   file.close();
 //  SPIFFS.end();
 }
@@ -42,7 +46,8 @@ int getIndexOfEvent(String eventName) {
 
 void saveToFile(String data) {
   File file = SPIFFS.open("/data.txt", "w+");
-  file.println(data);
+  file.print(data);
+  Serial.println(data);
   file.close();
 }
 
@@ -65,7 +70,7 @@ void updateDatabase(String eventName,String pattern) {
   int patternStartIndex = data.indexOf(eventName);
   patternStartIndex += patternStartIndex != -1? eventName.length() + 1 : 0;
   if(patternStartIndex == -1) {
-    data += eventName + ":" + pattern + "\n";
+    data += eventName + ":" + pattern + "#";
   } 
   else {
     for(int i = patternStartIndex; i < patternStartIndex+5; i++) {
@@ -134,21 +139,46 @@ void manageAPI() {
     performPattern(pattern);
     server.send(200, "text/plain", "Performing " + pattern);
   });
+  server.on("/testpattern", []() {//192.168.0.0?performpattern?event=door
+    String pattern = server.arg(0);
+    performPattern(pattern);
+    server.send(200, "text/plain", "Performing " + pattern);
+  });
+  
 
-   server.on("/data", []() {
+   server.on("/getdata", []() {
     String data = readFromFile();
     server.send(200, "text/plain", data);
   });
 
+  server.on("/setting", []() {
+    if(server.arg(0) == "1")
+      EEPROM.write(LED_POINTER, 1);
+    else
+      EEPROM.write(LED_POINTER, 0);
+    if (server.arg(1) == "1")
+      EEPROM.write(VIBRATION_POINTER, 1);
+    else
+     EEPROM.write(VIBRATION_POINTER, 0);
+    EEPROM.commit();
+    server.send(200, "text/plain", "Succeed");
+  });
+    
   server.on("/removehistory", []() {
     SPIFFS.remove("/data.txt");
     server.send(200, "text/plain", "Succeed");
   });
 
+  server.on("/battery", []() {
+    Serial.println(ESP.getVcc());
+    String voltage = String(ESP.getVcc());
+    server.send(200, "text/plain", voltage);
+  });
 
   server.onNotFound(handleNotFound);
 }
 void setup() {
+  EEPROM.begin(2);
   Serial.begin(9600);
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, PASSWORD);

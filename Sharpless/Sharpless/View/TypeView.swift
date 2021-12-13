@@ -10,6 +10,7 @@ import AVFoundation
 
 @available(iOS 15.0, *)
 struct TypeView: View {
+    
     @State var theUtterance = AVSpeechUtterance(string: "")
     @State var orientation = UIDevice.current.orientation
     @State private var buttonImage = "play.circle"
@@ -17,7 +18,7 @@ struct TypeView: View {
     @State private var backgroundColor: Color = .clear
     @FocusState private var keyboardIsFocused: Bool
     @Environment(\.dismiss) var dismiss
-    
+   
     let synth = AVSpeechSynthesizer()
     let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
         .makeConnectable()
@@ -71,7 +72,7 @@ struct TypeView: View {
         
     }
     func speak() {
-      
+        UIPasteboard.general.string = "Hello there"
         buttonImage = "pause.circle"
         // unpause
         if (synth.isPaused) {

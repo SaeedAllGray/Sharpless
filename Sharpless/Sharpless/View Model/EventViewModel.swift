@@ -14,16 +14,19 @@ final class EventViewModel: ObservableObject {
     
     
     func setEvents() {
-        loadState = .loading
         let url = URL(string: "http://192.168.1.134/getdata")!
         var request = URLRequest(url: url)
         request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            print("|||||||||||||||||||||||||||||")
             guard let data = data else { return }
+            print("1233333333333")
+           
             print(String(data: data, encoding: .utf8)!)
             
             DispatchQueue.main.async {
+                self.loadState = .loading
                 self.patternList = []
                 self.eventList = []
                 var resultString = ""

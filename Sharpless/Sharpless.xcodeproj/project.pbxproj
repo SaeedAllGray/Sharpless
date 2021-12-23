@@ -30,6 +30,7 @@
 		30BBD1DF2726C2C300432B52 /* LiveTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1DE2726C2C300432B52 /* LiveTextView.swift */; };
 		30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1E02726C4FD00432B52 /* SettingView.swift */; };
 		AD8B4D19274E4C5000DB1D9D /* SoundAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8B4D18274E4C5000DB1D9D /* SoundAnalysis.swift */; };
+		ADA6BDC72774ED8300F22110 /* BannerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA6BDC62774ED8300F22110 /* BannerModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		30BBD1DE2726C2C300432B52 /* LiveTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveTextView.swift; sourceTree = "<group>"; };
 		30BBD1E02726C4FD00432B52 /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AD8B4D18274E4C5000DB1D9D /* SoundAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundAnalysis.swift; sourceTree = "<group>"; };
+		ADA6BDC62774ED8300F22110 /* BannerModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				300438702727F1FA0051FAE7 /* SettingViewModel.swift */,
+				ADA6BDC62774ED8300F22110 /* BannerModifier.swift */,
 				30592597275942BB0013CACF /* EventViewModel.swift */,
 				3059258F275909090013CACF /* SetPatternViewModel.swift */,
 			);
@@ -350,6 +353,7 @@
 				3097C5A7275A2F4E00415147 /* BatteryView.swift in Sources */,
 				3097C5A4275A122200415147 /* PatternView.swift in Sources */,
 				AD8B4D19274E4C5000DB1D9D /* SoundAnalysis.swift in Sources */,
+				ADA6BDC72774ED8300F22110 /* BannerModifier.swift in Sources */,
 				30592592275909F70013CACF /* Pattern.swift in Sources */,
 				304764F9273911F100CE2741 /* SetVibrationView.swift in Sources */,
 				3034D2C0273E6B0F00EAD0F7 /* SetPatternView.swift in Sources */,

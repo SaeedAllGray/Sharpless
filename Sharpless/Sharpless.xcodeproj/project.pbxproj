@@ -31,7 +31,9 @@
 		30BBD1CE2726A8E200432B52 /* SharplessUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1CD2726A8E200432B52 /* SharplessUITests.swift */; };
 		30BBD1DF2726C2C300432B52 /* LiveTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1DE2726C2C300432B52 /* LiveTextView.swift */; };
 		30BBD1E12726C4FD00432B52 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BBD1E02726C4FD00432B52 /* SettingView.swift */; };
-		AD8B4D19274E4C5000DB1D9D /* SoundAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8B4D18274E4C5000DB1D9D /* SoundAnalysis.swift */; };
+		AD8B4D19274E4C5000DB1D9D /* SoundResultsObserver.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8B4D18274E4C5000DB1D9D /* SoundResultsObserver.swift.swift */; };
+		ADB8A9B2277FC55C008B085D /* LiveTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB8A9B1277FC55C008B085D /* LiveTextViewModel.swift */; };
+		ADB8A9B4277FC577008B085D /* BannerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB8A9B3277FC577008B085D /* BannerModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,7 +84,9 @@
 		30BBD1CF2726A8E200432B52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30BBD1DE2726C2C300432B52 /* LiveTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveTextView.swift; sourceTree = "<group>"; };
 		30BBD1E02726C4FD00432B52 /* SettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		AD8B4D18274E4C5000DB1D9D /* SoundAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundAnalysis.swift; sourceTree = "<group>"; };
+		AD8B4D18274E4C5000DB1D9D /* SoundResultsObserver.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundResultsObserver.swift.swift; sourceTree = "<group>"; };
+		ADB8A9B1277FC55C008B085D /* LiveTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextViewModel.swift; sourceTree = "<group>"; };
+		ADB8A9B3277FC577008B085D /* BannerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +205,8 @@
 				300438702727F1FA0051FAE7 /* SettingViewModel.swift */,
 				30592597275942BB0013CACF /* EventViewModel.swift */,
 				3059258F275909090013CACF /* SetPatternViewModel.swift */,
+				ADB8A9B1277FC55C008B085D /* LiveTextViewModel.swift */,
+				ADB8A9B3277FC577008B085D /* BannerModifier.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -211,7 +217,7 @@
 				300A226727329B4C005AE53D /* Sound.swift */,
 				3007DE562735AEE200414570 /* Color+Extension.swift */,
 				3034D2BD273E6A3D00EAD0F7 /* Vibration.swift */,
-				AD8B4D18274E4C5000DB1D9D /* SoundAnalysis.swift */,
+				AD8B4D18274E4C5000DB1D9D /* SoundResultsObserver.swift.swift */,
 				30592591275909F70013CACF /* Pattern.swift */,
 				3059259327590C650013CACF /* LoadState.swift */,
 				306296AD2774F0E7005EC838 /* events.swift */,
@@ -357,7 +363,7 @@
 				30741D202729C18E00279088 /* TypeView.swift in Sources */,
 				3097C5A7275A2F4E00415147 /* BatteryView.swift in Sources */,
 				3097C5A4275A122200415147 /* PatternView.swift in Sources */,
-				AD8B4D19274E4C5000DB1D9D /* SoundAnalysis.swift in Sources */,
+				AD8B4D19274E4C5000DB1D9D /* SoundResultsObserver.swift.swift in Sources */,
 				30592592275909F70013CACF /* Pattern.swift in Sources */,
 				304764F9273911F100CE2741 /* SetVibrationView.swift in Sources */,
 				3034D2C0273E6B0F00EAD0F7 /* SetPatternView.swift in Sources */,
@@ -369,6 +375,8 @@
 				30BBD1B12726A8E000432B52 /* SharplessApp.swift in Sources */,
 				300A226827329B4C005AE53D /* Sound.swift in Sources */,
 				30592596275926090013CACF /* EventListView.swift in Sources */,
+				ADB8A9B4277FC577008B085D /* BannerModifier.swift in Sources */,
+				ADB8A9B2277FC55C008B085D /* LiveTextViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -51,19 +51,9 @@ struct SettingView: View {
                         Toggle("Vibration", isOn: $settingViewModel.vibrationON)
                     }
                     Section (header: Text("Nansie")) {
-                        HStack {
-                            Text("Software Update")
-                            Spacer()
-                            ZStack {
-                                Color.teal
-                                Text("Update")
-                            }
-                            .foregroundColor(.primary)
-                            .frame(width: 75,height: 30)
-                            .clipShape(Capsule())
-                            .onTapGesture {
-                                
-                            }
+                       
+                        Button("Software Version") {
+                             
                         }
                         
                         NavigationLink(destination: EventListView()) {

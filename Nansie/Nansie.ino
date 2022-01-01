@@ -5,6 +5,7 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <EEPROM.h>
+#include <ArduinoOTA.h>
 #include <FS.h>
 
 const byte LED_PIN = LED_BUILTIN;
@@ -13,6 +14,8 @@ const String WIFI_SSID = "The Cyan One";
 const String PASSWORD = "October2020";
 const byte OFF = 0, ON = 1;
 const byte LED_POINTER = 0, VIBRATION_POINTER  = 1;
+
+const String latestUpdateMessage = "Nansie Sharpless Version 0.1.0";
 
 
 ESP8266WebServer server(80);
@@ -181,8 +184,80 @@ void manageAPI() {
     String voltage = String(ESP.getVcc());
     server.send(200, "text/plain", voltage);
   });
+  server.on("/update", []() {
+    server.send(200, "text/plain", latestUpdateMessage);
+  });
 
   server.onNotFound(handleNotFound);
+}
+
+void OTAOnStart() 
+{
+  ArduinoOTA.onStart([]() {
+    String type;
+    if (ArduinoOTA.getCommand() == U_FLASH)
+    {
+      type = "sketch";
+    } else 
+    {
+      type = "filesystem";
+    }
+     Serial.println("Start Updating " + type);
+  });
+}
+
+void OTAOnEnd()
+{
+  ArduinoOTA.onEnd([]() {
+    Serial.println("\nEnd");
+  });
+}
+void OTAOnProgress()
+{
+  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
+    server.send(200, "Progress");
+    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
+  });
+}
+void OTAOnError()
+{
+  ArduinoOTA.onError([](ota_error_t error) {
+    Serial.printf("Error[%u]: ", error);
+    if (error == OTA_AUTH_ERROR) {
+      server.send(404, "text/plain", "Auth Failed");
+      Serial.println("Auth Failed");
+    } else if (error == OTA_BEGIN_ERROR) {
+      server.send(404, "text/plain", "Begin Failed");
+      Serial.println("Begin Failed");
+    } else if (error == OTA_CONNECT_ERROR) {
+      server.send(404, "text/plain", "Connect Failed");
+      Serial.println("Connect Failed");
+    } else if (error == OTA_RECEIVE_ERROR) {
+      server.send(404, "Receive Failed");
+      Serial.println("Receive Failed");
+    } else if (error == OTA_END_ERROR) {
+      server.send(404, "End Failed");
+      Serial.println("End Failed");
+    }
+  });
+}
+
+void configureOTA()
+{
+  // Port defaults to 8266
+  ArduinoOTA.setPort(8266);
+
+  ArduinoOTA.setHostname("Nansie_ESP8266");
+//  MD5(sharpless) = 4431293f510370624fa504d839f00d1f;
+//  ArduinoOTA.setPasswordHash("4431293f510370624fa504d839f00d1f");
+
+  OTAOnStart();
+  OTAOnEnd();
+  OTAOnProgress();
+  OTAOnError();
+  
+  ArduinoOTA.begin();
+  
 }
 void setup() {
   EEPROM.begin(2);
@@ -194,10 +269,13 @@ void setup() {
   setPinModes(); 
   mdns();
   manageAPI();
+  configureOTA();
   server.begin();
+  
 }
 
 void loop() { 
+  ArduinoOTA.handle();
   server.handleClient();
   MDNS.update();
 }

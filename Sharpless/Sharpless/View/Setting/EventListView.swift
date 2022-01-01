@@ -11,6 +11,7 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct EventListView: View {
     @ObservedObject var eventViewModel = EventViewModel()
+    @State private var showingSetVibrationView = false
     
     var body: some View {
         
@@ -25,10 +26,10 @@ struct EventListView: View {
             }
             else {
                 List(Array(zip(eventViewModel.eventList, eventViewModel.patternList)) ,id: \.0) { item in
-                    NavigationLink(destination: SetVibrationView(event: item.0)) {
+                    NavigationLink(destination: SetVibrationView(event: item.0.rawValue)) {
                         
                         HStack {
-                            Text(item.0)
+                            Text(item.0.rawValue)
                             Spacer()
                             
                             PatternView(pattern: item.1)
@@ -41,24 +42,16 @@ struct EventListView: View {
                 }
                 .listStyle(InsetGroupedListStyle())
             }
-        }.onAppear(perform: {
+        }
+        .accentColor(.teal)
+        .navigationTitle("Events")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear(perform: {
+            print("SEET EVVENTS")
             eventViewModel.setEvents()
         })
-            .toolbar {
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    
-                }
-                
-            }
-            .accentColor(.teal)
-            .navigationTitle("Events")
-            .navigationBarTitleDisplayMode(.inline)
+        
+            
         
         
         

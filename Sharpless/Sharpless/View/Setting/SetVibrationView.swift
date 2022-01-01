@@ -30,17 +30,17 @@ struct SetVibrationView: View {
                     Button("Clear") {
                         setPatterViewModel.clearPattern()
                     }
-//                    .disabled(!setPatterViewModel.shouldActiveSaveButton())
-                
+                    //                    .disabled(!setPatterViewModel.shouldActiveSaveButton())
+                    
                     HStack(alignment: .center) {
                         Button("Perform") {
                             setPatterViewModel.testPattern()
                         }
                         .disabled(!setPatterViewModel.shouldActiveSaveButton())
-                    
+                        
                         Spacer()
                         SetPatternView(pattern: $setPatterViewModel.pattern)
-                          
+                        
                     }
                     VStack {
                         
@@ -102,7 +102,7 @@ struct SetVibrationView: View {
                         .disabled(setPatterViewModel.shouldActiveSaveButton())
                         
                     }
-                    .frame(width: .infinity,height: 100)
+//                    .frame(width: .infinity,height: 100)
                     .cornerRadius(10)
                     
                     
@@ -111,14 +111,18 @@ struct SetVibrationView: View {
                 
                 
             }
-//            .listStyle(InsetGroupedListStyle())
+            //            .listStyle(InsetGroupedListStyle())
             
         }
         
         .navigationTitle(self.event)
         .toolbar {
+            
+            
             Button("Save") {
+
                 setPatterViewModel.savePattern(event: self.event, pattern: setPatterViewModel.pattern)
+//                dismiss()
                 
             }
             .disabled(!setPatterViewModel.shouldActiveSaveButton())

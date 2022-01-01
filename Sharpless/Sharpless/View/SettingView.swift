@@ -37,27 +37,23 @@ struct SettingView: View {
                         })
                     }
                     Section (header: Text("Text Size")) {
-                        Slider(value: $settingViewModel.fontSize, in: 10...100)
-                            .padding()
+                        Slider(value: $settingViewModel.fontSize, in: 10...100){
+                            Text("Speed")
+                        } minimumValueLabel: {
+                            Image(systemName: "textformat.size.smaller")
+                        } maximumValueLabel: {
+                            Image(systemName: "textformat.size.larger")
+                        }
+//                            .padding()
                     }
                     Section(header: Text("Preferences")) {
                         Toggle("LED", isOn: $settingViewModel.ledON)
                         Toggle("Vibration", isOn: $settingViewModel.vibrationON)
                     }
                     Section (header: Text("Nansie")) {
-                        HStack {
-                            Text("Software Update")
-                            Spacer()
-                            ZStack {
-                                Color.teal
-                                Text("Update")
-                            }
-                            .foregroundColor(.primary)
-                            .frame(width: 75,height: 30)
-                            .clipShape(Capsule())
-                            .onTapGesture {
-                                
-                            }
+                       
+                        Button("Software Version") {
+                             
                         }
                         
                         NavigationLink(destination: EventListView()) {
@@ -83,26 +79,28 @@ struct SettingView: View {
                     
                 }.listStyle(InsetGroupedListStyle())
             }
-            
+            .navigationTitle("Setting")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                    
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        settingViewModel.saveSetting()
+                        dismiss()
+                    }
+                    
+                }
+            }
         }
         //            .accentColor(.teal)
-        .navigationTitle("Setting")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button("Cancel") {
-                    dismiss()
-                }
-                
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Done") {
-                    settingViewModel.saveSetting()
-                    dismiss()
-                }
-                
-            }
-        }
+        
+        
+        
         .accentColor(.teal)
         .environmentObject(settingViewModel)
     }

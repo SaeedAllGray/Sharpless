@@ -36,7 +36,9 @@ struct BannerModifier: ViewModifier {
                        .cornerRadius(8)
                        Spacer()
                    }
+                   .padding(12)
                }
+            
                content
            }
     }
@@ -57,7 +59,11 @@ enum BannerType {
     var tintColor: Color {
         switch self {
         case .Info:
-            return Color(red: 67/255, green: 154/255, blue: 215/255)
+            if #available(iOS 15.0, *) {
+                return Color.teal
+            } else {
+                return Color.blue
+            }
         case .Success:
             return Color.green
         case .Warning:

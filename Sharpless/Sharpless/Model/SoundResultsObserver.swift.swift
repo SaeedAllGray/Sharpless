@@ -17,19 +17,22 @@ class SoundResultsObserver: NSObject, SNResultsObserving {
         guard let classification = result.classifications.first else { return }
 
         //let timeInSeconds = result.timeRange.start.seconds
-
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        let date_str = formatter.string(from: date)
 
         let confidence = classification.confidence * 100.0
       
         
         if confidence > 60 {
             if #available(iOS 15.0, *) {
-                let date = Date()
-                let formattedTime = date.formatted(date: .complete, time: .complete)
-                print("Analysis result for audio at time: \(formattedTime)")
-                let sound = recognizedSound(name: classification.identifier, time: formattedTime)
+               
+                print("Analysis result for audio at time: \(date_str)")
+                let sound = recognizedSound(name: classification.identifier, time: date_str)
                 LiveTextViewModel.shared.soundsHistory.append(sound)
-                UserDefaults.standard.domainSchemas.append(sound)
+                
                 
             } else {
             // Fallback on earlier versions

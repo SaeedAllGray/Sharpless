@@ -183,9 +183,11 @@ final class LiveTextViewModel: ObservableObject {
     func soundAnalysisToggle() {
         if  !isRecording {
             start()
+            text = "I'm listening"
             isRecording.toggle()
         } else {
             stop()
+            text = "Tap the mic to start!"
             isRecording.toggle()
             showBanner = false
         }

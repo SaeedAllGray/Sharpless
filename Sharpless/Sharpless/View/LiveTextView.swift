@@ -38,7 +38,7 @@ struct LiveTextView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack {
-                    Spacer(minLength: 65)
+                    Spacer(minLength: 80)
                     ScrollView {
                         TextEditor(text: $liveTextViewModel.text)
                             .allowsHitTesting(false)

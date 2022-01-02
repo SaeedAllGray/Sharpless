@@ -15,19 +15,21 @@ final class LiveTextViewModel: ObservableObject {
     
     static var shared = LiveTextViewModel()
     
-    
+   
     @Published var soundBanner = BannerModifier.BannerData(title: "", subtitle: "", type: .Error)
     @Published var showBanner: Bool = false
     @Published var isRecording = false
     @Published var text: String = "Tap the mic to start!"
      var soundsHistory = [recognizedSound]() {
         didSet {
+            
             DispatchQueue.main.async { [self] in
                 let lastIndex = soundsHistory.endIndex - 1
                 let lastSound = soundsHistory[lastIndex]
                 let bannerData = BannerModifier.BannerData(title: lastSound.name, subtitle: lastSound.time, type: .Info)
                 showBanner = true
                 soundBanner = bannerData
+                
             }
             
         }

@@ -19,6 +19,7 @@ final class SettingViewModel: ObservableObject {
     @Published var patternList: [Pattern] = []
     @Published var loadingState: LoadState = .notLoaded
     
+    
     @Published var eventList: [String] = {
         do {
             let request = try SNClassifySoundRequest(classifierIdentifier: SNClassifierIdentifier.version1)

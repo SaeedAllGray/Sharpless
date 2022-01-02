@@ -15,6 +15,7 @@ import Speech
 
 @available(iOS 15.0, *)
 struct LiveTextView: View {
+    
     @StateObject var settingViewModel = SettingViewModel()
     @ObservedObject var liveTextViewModel = LiveTextViewModel.shared
     @State private var showingSettingView = false

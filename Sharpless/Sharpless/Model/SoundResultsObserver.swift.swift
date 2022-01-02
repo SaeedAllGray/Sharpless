@@ -29,6 +29,8 @@ class SoundResultsObserver: NSObject, SNResultsObserving {
                 print("Analysis result for audio at time: \(formattedTime)")
                 let sound = recognizedSound(name: classification.identifier, time: formattedTime)
                 LiveTextViewModel.shared.soundsHistory.append(sound)
+                UserDefaults.standard.domainSchemas.append(sound)
+                
             } else {
             // Fallback on earlier versions
             }

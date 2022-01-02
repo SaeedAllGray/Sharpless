@@ -13,3 +13,20 @@ struct Sound {
     
     // #
 }
+
+class recognizedSound {
+
+    var name: String
+    var vibrationPattern: String
+    var time: String
+    
+    init(name: String, vibrationPatter: String = "v<300>s<100>", time: String) {
+        self.name = name
+        self.vibrationPattern = vibrationPatter
+        self.time = time
+    }
+    
+    // #
+}
+
+

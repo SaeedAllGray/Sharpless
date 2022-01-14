@@ -11,22 +11,22 @@ import SwiftUI
 struct BatteryView: View {
     var voltage: Double
     var body: some View {
-        if voltage > 3.9 {
+        if voltage > 3030 {
             Image(systemName: "battery.100")
                 .foregroundColor(.green)
                 .font(.system(size: 30))
         }
-        else if(voltage > 3.7) {
+        else if(voltage > 3025) {
             Image(systemName: "battery.50")
             
                 .foregroundColor(.cyan)
-                .font(.system(size: 20))
+                .font(.system(size: 30))
                 
         }
         else {
             Image(systemName: "battery.0")
                 .foregroundColor(.red)
-                .font(.system(size: 20))
+                .font(.system(size: 30))
         }
     }
 }

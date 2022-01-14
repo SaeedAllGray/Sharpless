@@ -15,21 +15,41 @@ final class LiveTextViewModel: ObservableObject {
     
     static var shared = LiveTextViewModel()
     
-   
+    
     @Published var soundBanner = BannerModifier.BannerData(title: "", subtitle: "", type: .Error)
     @Published var showBanner: Bool = false
     @Published var isRecording = false
     @Published var text: String = "Tap the mic to start!"
-     var soundsHistory = [recognizedSound]() {
+    
+    fileprivate func performPattern(of lastSound: String) {
+        let url = URL(string: "http://192.168.1.134/performpattern?pattern=\(lastSound)")!
+        var request = URLRequest(url: url)
+        request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "GET"
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+        
+        task.resume()
+    }
+    
+    var soundsHistory = [recognizedSound]() {
         didSet {
+            let lastIndex = soundsHistory.endIndex - 1
+            let lastSound = soundsHistory[lastIndex]
             
             DispatchQueue.main.async { [self] in
-                let lastIndex = soundsHistory.endIndex - 1
-                let lastSound = soundsHistory[lastIndex]
+                
                 let bannerData = BannerModifier.BannerData(title: lastSound.name, subtitle: lastSound.time, type: .Info)
                 showBanner = true
                 soundBanner = bannerData
                 
+            }
+            let lastEvent = Events(rawValue: lastSound.name)
+            if let lastEvent = lastEvent {
+                performPattern(of: lastEvent.rawValue)
             }
             
         }
@@ -44,7 +64,7 @@ final class LiveTextViewModel: ObservableObject {
     private var audioEngine: AVAudioEngine!
     private var inputNode: AVAudioInputNode!
     private var audioSession: AVAudioSession!
-   
+    
     // soundAnalysis-related properties
     //private let soundAudioEngine: AVAudioEngine = AVAudioEngine()
     private let inputBus: AVAudioNodeBus = AVAudioNodeBus(1)
@@ -52,7 +72,7 @@ final class LiveTextViewModel: ObservableObject {
     private var streamAnalyzer: SNAudioStreamAnalyzer!
     private let resultsObserver = SoundResultsObserver()
     private let analysisQueue = DispatchQueue(label: "com.example.AnalysisQueue")
-
+    
     private init() {
         self.name = "Peter"
     }
@@ -62,7 +82,7 @@ final class LiveTextViewModel: ObservableObject {
         // Present an alert.
         print(message)
         // Disable record button.
-       
+        
     }
     private func prepareSpeechRequest() {
         
@@ -95,15 +115,15 @@ final class LiveTextViewModel: ObservableObject {
                 } else if let range = res.range(of: HeyName) {
                     let heyText = HeyName + res[range.upperBound...]
                     self.text = String(heyText)
-                  
+                    
                 }
             }
-
+            
             if error != nil  {
                 // Stop recognizing speech if there is a problem.
                 self.audioEngine.stop()
                 self.inputNode.removeTap(onBus: 0)
-
+                
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
             }
@@ -112,23 +132,20 @@ final class LiveTextViewModel: ObservableObject {
         }
     }
     fileprivate func setupAudioEngine() throws {
-       
+        
         audioEngine = AVAudioEngine()
         inputNode = audioEngine.inputNode
         let recordingFormat = inputNode.outputFormat(forBus: 0)
         
         streamAnalyzer = SNAudioStreamAnalyzer(format: recordingFormat)
-        if #available(iOS 15.0, *) {
+        
             // speech
             let request = try SNClassifySoundRequest(classifierIdentifier: SNClassifierIdentifier.version1)
             // sound
             try streamAnalyzer.add(request,
                                    withObserver: resultsObserver)
-         
             
-        } else {
-            // Fallback on earlier versions
-        }
+            
         
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { buffer, time in
             self.recognitionRequest?.append(buffer)
@@ -153,7 +170,7 @@ final class LiveTextViewModel: ObservableObject {
         try setupAudioEngine()
         try activateAudioSession()
     }
-
+    
     func start() {
         do {
             try speechAndSoundAnalysis()
@@ -178,8 +195,8 @@ final class LiveTextViewModel: ObservableObject {
         }
         audioSession = nil
     }
-
-
+    
+    
     func soundAnalysisToggle() {
         if  !isRecording {
             start()

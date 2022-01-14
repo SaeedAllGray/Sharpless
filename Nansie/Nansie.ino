@@ -13,9 +13,10 @@ const byte LED_PIN = LED_BUILTIN;
 const String WIFI_SSID = "The Cyan One"; 
 const String PASSWORD = "October2020";
 const byte OFF = 0, ON = 1;
+const byte D5_FOR_VIBRATION = 14;
 const byte LED_POINTER = 0, VIBRATION_POINTER  = 1;
 
-const String latestUpdateMessage = "Nansie Sharpless Version 0.1.0";
+const String latestUpdateMessage = "Nansie Sharpless Version 0.7.0";
 
 
 ESP8266WebServer server(80);
@@ -24,6 +25,7 @@ ADC_MODE(ADC_VCC);
 
 void setPinModes() {
   pinMode(LED_PIN, OUTPUT);
+  pinMode(D5_FOR_VIBRATION, OUTPUT);
 }
 void createFile() {
   SPIFFSConfig cfg;
@@ -107,22 +109,49 @@ void connectingToWiFi() {
   message = "Connected after " + String(counter) + " seconds.";
   Serial.print(message);
 }
-
-void performPattern(String pattern) {   
+void performLongBeeb() {
+   byte ledIsEnabled = EEPROM.read(LED_POINTER);
+  byte vibrationIsEnabled = EEPROM.read(VIBRATION_POINTER);
+  if(ledIsEnabled) {
+    digitalWrite(LED_PIN, LOW);
+    if(vibrationIsEnabled)
+      digitalWrite(D5_FOR_VIBRATION, HIGH);
+    delay(1000);
+    digitalWrite(LED_PIN, HIGH);
+    if(vibrationIsEnabled)
+      digitalWrite(D5_FOR_VIBRATION, LOW);
+  } else {
+    digitalWrite(D5_FOR_VIBRATION, HIGH);
+    delay(1000);
+    digitalWrite(D5_FOR_VIBRATION, LOW);
+  }
+}
+void performShortBeeb() {
+  byte ledIsEnabled = EEPROM.read(LED_POINTER);
+  byte vibrationIsEnabled = EEPROM.read(VIBRATION_POINTER);
+  if(ledIsEnabled) {
+    digitalWrite(LED_PIN, LOW);
+    if(vibrationIsEnabled)
+      digitalWrite(D5_FOR_VIBRATION, HIGH);
+    delay(100);
+    digitalWrite(LED_PIN, HIGH);
+    if(vibrationIsEnabled)
+      digitalWrite(D5_FOR_VIBRATION, LOW);
+  } else {
+    digitalWrite(D5_FOR_VIBRATION, HIGH);
+    delay(100);
+    digitalWrite(D5_FOR_VIBRATION, LOW);
+  }
+}
+void performPattern(String pattern) {
+  
   for (int i = 0; i < 5; i++) 
   {
      delay(100);
-     if (pattern[i] == 's') {
-        digitalWrite(LED_PIN, LOW);
-        delay(100);
-        digitalWrite(LED_PIN, HIGH);
-     }
+     if (pattern[i] == 's') 
+        performShortBeeb();
      else if (pattern[i] == 'l') 
-     {
-        digitalWrite(LED_PIN, LOW);
-        delay(1000);
-        digitalWrite(LED_PIN, HIGH);
-     }
+        performLongBeeb();
   }
 }
 void handleNotFound() {
@@ -144,7 +173,7 @@ void manageAPI() {
     updateDatabase(server.arg(0),server.arg(1)); 
   });
   
-  server.on("/performpattern", []() {//192.168.0.0?performpattern?event=door
+  server.on("/performpattern", []() { //192.168.0.0?performpattern?event=door
     String pattern = getPattern(server.arg(0));
     performPattern(pattern);
     server.send(200, "text/plain", "Performing " + pattern);

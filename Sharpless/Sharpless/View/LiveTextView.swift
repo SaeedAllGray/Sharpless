@@ -127,7 +127,7 @@ struct LiveTextView: View {
     }
     // MARK: -Helpers
     func actionSheet() {
-        let sharedText = text
+        let sharedText = self.liveTextViewModel.text
         let activityVC = UIActivityViewController(activityItems: [sharedText], applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }

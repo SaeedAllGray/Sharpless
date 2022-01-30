@@ -1,4 +1,4 @@
-//Saeed & Media
+// Saeed & Media
 // 2021 - All rights resereved.
 
 #include <ESP8266WiFi.h>
@@ -153,6 +153,7 @@ void performPattern(String pattern) {
      else if (pattern[i] == 'l') 
         performLongBeeb();
   }
+  delay(2000);
 }
 void handleNotFound() {
   server.send(404, "text/plain", "Bad Request!");
@@ -173,8 +174,9 @@ void manageAPI() {
     updateDatabase(server.arg(0),server.arg(1)); 
   });
   
-  server.on("/performpattern", []() { //192.168.0.0?performpattern?event=door
+  server.on("/performpattern", []() { //192.168.0.0/performpattern?event=door
     String pattern = getPattern(server.arg(0));
+    performShortBeeb();performShortBeeb();performShortBeeb();
     performPattern(pattern);
     server.send(200, "text/plain", "Performing " + pattern);
   });

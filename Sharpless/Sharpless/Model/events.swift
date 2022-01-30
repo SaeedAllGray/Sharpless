@@ -9,7 +9,7 @@ import Foundation
 
 
 enum Events: String {
-    case name, siren, yell, screaming, bell, car_horn, knock, telephone
+    case name, emergency_vehicle, yell, screaming, bell, car_horn, knock, telephone,ringtone
     
 }
-var events: [Events] =  [.name, .bell, .car_horn, .knock, .screaming, .siren, .yell, .telephone]
+var events: [Events] =  [.name, .bell, .car_horn, .knock, .screaming, .emergency_vehicle, .yell, .telephone,.ringtone]

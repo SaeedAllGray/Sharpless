@@ -108,13 +108,15 @@ final class LiveTextViewModel: ObservableObject {
             let heyName = "hey \(self.name)"
             let HeyName = "Hey \(self.name)"
             if res.contains(heyName) || res.contains(HeyName)  {
-                // TODO: notify vibrator Motor
+                
                 if let range = res.range(of: heyName){
+                    
                     let heyText = heyName + res[range.upperBound...]
                     self.text = String(heyText)
                 } else if let range = res.range(of: HeyName) {
                     let heyText = HeyName + res[range.upperBound...]
                     self.text = String(heyText)
+                    self.performPattern(of: "name")
                     
                 }
             }

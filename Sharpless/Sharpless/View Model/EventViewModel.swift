@@ -8,8 +8,8 @@
 import SwiftUI
 
 final class EventViewModel: ObservableObject {
-    @Published var eventList: [Events] = [.name, .bell, .car_horn, .knock, .screaming, .siren, .yell, .telephone]
-    @Published var patternList: [Pattern] = [Pattern](repeating: Pattern(string: ""), count: 8)
+    @Published var eventList: [Events] = events
+    @Published var patternList: [Pattern] = [Pattern](repeating: Pattern(string: ""), count: events.count)
     @Published var loadState = LoadState.notLoaded
     
     

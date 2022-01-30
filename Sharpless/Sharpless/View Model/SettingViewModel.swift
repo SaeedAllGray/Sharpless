@@ -15,7 +15,7 @@ final class SettingViewModel: ObservableObject {
     @Published var battery: Double = 0
     
     @Published var fontSize: Double = 20
-    @Published var name: String = "Tom"
+    @Published var name: String = ""
     @Published var patternList: [Pattern] = []
     @Published var loadingState: LoadState = .notLoaded
     
@@ -38,6 +38,9 @@ final class SettingViewModel: ObservableObject {
         fontSize = defaults.double(forKey: "font size")
         ledON = defaults.bool(forKey: "LED")
         vibrationON = defaults.bool(forKey: "vibration")
+        if let name = UserDefaults.standard.string(forKey: "Name") {
+            self.name = name
+        }
     }
     func setFontSize() {
         defaults.set(fontSize, forKey: "font size")
@@ -66,6 +69,7 @@ final class SettingViewModel: ObservableObject {
         defaults.set(fontSize, forKey: "font size")
         defaults.set(ledON, forKey: "LED")
         defaults.set(vibrationON, forKey: "vibration")
+        setName()
         let ledValueToSave = ledON ? 1 : 0
         let vibrationValueToSave = vibrationON ? 1 : 0
         let url = URL(string: "http://192.168.1.134/setting?led=\(ledValueToSave)&vibration=\(vibrationValueToSave)")!

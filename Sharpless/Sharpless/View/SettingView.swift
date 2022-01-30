@@ -47,6 +47,7 @@ struct SettingView: View {
 //                            .padding()
                     }
                     Section(header: Text("Preferences")) {
+                        TextField("Name", text: $settingViewModel.name, prompt: Text("Name"))
                         Toggle("LED", isOn: $settingViewModel.ledON)
                         Toggle("Vibration", isOn: $settingViewModel.vibrationON)
                     }

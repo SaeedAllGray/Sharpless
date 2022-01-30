@@ -51,7 +51,7 @@ struct LiveTextView: View {
                     
                     HStack (alignment: .center) {
                         Button {
-                            self.text = ""
+                            self.liveTextViewModel.text = ""
                         } label: {
                             Image(systemName: "trash")
                                 .font(.system(size: 30))

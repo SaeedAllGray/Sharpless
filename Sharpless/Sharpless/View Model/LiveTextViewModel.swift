@@ -74,7 +74,7 @@ final class LiveTextViewModel: ObservableObject {
     private let analysisQueue = DispatchQueue(label: "com.example.AnalysisQueue")
     
     private init() {
-        self.name = "Peter"
+        self.name = ""
     }
     
     // private methods
@@ -86,6 +86,7 @@ final class LiveTextViewModel: ObservableObject {
     }
     private func prepareSpeechRequest() {
         
+        self.name = UserDefaults.standard.string(forKey: "Name") ?? ""
         // Speech recognition
         speechRecognizer = SFSpeechRecognizer()
         guard let speechRecognizer = speechRecognizer , speechRecognizer.isAvailable else {

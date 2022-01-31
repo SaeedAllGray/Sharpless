@@ -23,7 +23,7 @@ struct SetVibrationView: View {
                     
                         .listRowInsets(EdgeInsets())
                     
-                }
+                }.disabled(true)
                 
                 
                 Section(header: Text("Vibration"),footer: Text("Design the pattern you desire to trigger when iPhone identified the event.")){

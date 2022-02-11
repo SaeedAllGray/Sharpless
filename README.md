@@ -1,5 +1,5 @@
 # Sharpless
-An iOS application which helps deaf people communicate with their surroundings by providing speach to text, text to speach and event recognizer. e.g door bell, telephone rings and siren sounds etc.
+An iOS application which helps deaf people communicate with their surroundings by providing speach to text, text to speach and event recognizer. e.g door bell, telephone rings and siren sounds etc. Whenever you call their name they are informed by their smartphones.
 # Nansie
 It's a Wemos ESP8266 attached to a band in addition to a vibration motor. User can set vibration patterns in order to understand what happens. 
 The vibration motor is as follow:
